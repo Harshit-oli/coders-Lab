@@ -137,8 +137,6 @@ try {
     message:"code executed!",
     submission:submissionWithTestCase,
    })
-
-
 } catch (error) {
     console.log(error);
     res.status(500).json({
