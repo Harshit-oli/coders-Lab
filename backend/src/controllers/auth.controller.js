@@ -158,7 +158,7 @@ export const logout=async (req,res)=>{
 
 export const check=async (req,res)=>{
   try {
-    return res.status(400).json({
+    return res.status(200).json({
         success:true,
         message:"user authenticated successfully",
         user:req.user,

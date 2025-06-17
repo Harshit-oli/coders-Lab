@@ -6,12 +6,19 @@ import problemRoutes from "./routes/problem.routes.js";
 import executionRoute from "./routes/executeCode.routes.js";
 import submissionRoutes from "./routes/submission.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js";
+import cors from "cors"
 
 dotenv.config();
 
 const app=express();
 const PORT=process.env.PORT;
 app.use(express.json());
+app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  );
 app.use(cookieParser());
 app.get("/",(req,res)=>{
     
