@@ -561,7 +561,20 @@ const CreateProblemForm = () => {
     const [isLoading,setIsLoading]=useState(false);
 
     const onSubmit=async (value)=>{
-      console.log(value);
+      try{
+         setIsLoading(true);
+         const res=await exiosInstance.post("/problems/create-problem",value);
+         console.log(res);
+         toast.success(res.data.message || "problem  created successfully");
+         navigation("/");
+
+      }catch(error){
+        console.log(error);
+        toast.error("error creating problem");
+      }
+      finally{
+        setIsLoading(false);
+      }
     }
 
     const loadSampleData=()=>{
