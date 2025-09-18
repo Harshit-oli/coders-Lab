@@ -133,7 +133,8 @@ export const getProblemById=async(req,res)=>{
 
         res.status(200).json({
             success:true,
-            message:"message created successfully",
+            message:"message creatzed successfully",
+            problem,
         })
     } catch (error) {
         console.error(error);

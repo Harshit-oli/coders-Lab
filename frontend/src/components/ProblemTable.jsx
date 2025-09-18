@@ -33,12 +33,8 @@ const   ProblemTable = ({problems}) => {
 
   const difficulties=["EASY","MEDIUM","HARD"];
 
-  const handleDelete =(id)=>{
-
-  }
-  const handleAddToPlaylist = (id)=>{
-
-  }
+  const handleDelete =(id)=>{}
+  const handleAddToPlaylist = (id)=>{}
 
   return (
      <div className="w-full max-w-6xl mx-auto mt-10">
