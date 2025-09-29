@@ -112,7 +112,8 @@ export const createPlaylist=async(req,res)=>{
 
         res.status(200).json({
             success:true,
-            message:"playlist created successfully"
+            message:"playlist created successfully",
+            playlist
         })
     } catch (error) {
         
@@ -133,7 +134,7 @@ export const addProblemToPlaylist=async(req,res)=>{
         //create records for each problems in the playlist 
         const problemInPlaylist=await db.problemInPlaylist.createMany({
             data:problemIds.map((problemId)=>({
-                playlistId,
+                playListId:playlistId,
                 problemId
             }))
         })

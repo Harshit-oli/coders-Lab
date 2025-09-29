@@ -1,7 +1,12 @@
 import React, {useState, useMemo} from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import { Link } from 'react-router-dom'
-import { Bookmark, PencilIcon, Trash, TrashIcon,Plus } from 'lucide-react'
+import { Bookmark, PencilIcon, Trash, TrashIcon,Plus, Loader, Loader2 } from 'lucide-react'
+import { useActions } from '../store/useAction'
+import { useNavigate } from 'react-router-dom'
+import { usePlaylistStore } from '../store/usePlaylistStore'
+import CreatePlaylistModel from './CreatePlaylistModel'
+import AddToPlaylist from './AddToPlaylist'
 
 const   ProblemTable = ({problems}) => {
   const {authUser}=useAuthStore();
@@ -9,7 +14,12 @@ const   ProblemTable = ({problems}) => {
   const [difficulty,setDifficulty]=useState("ALL");
   const [selectedTag,setSelectedTag]=useState("ALL");
   const [currentPage,setCurrentPage]=useState(1); 
-
+   const [selectedProblemId, setSelectedProblemId] = useState(null);
+  const [isCreateModalOpen,setIsCreateModalOpen]=useState(false);
+  const [isAddToPlaylistModelOpen,setIsAddToPlaylistModelOpen]=useState(false);
+  const {createPlaylist}=usePlaylistStore();
+  const {isDeletingProblem,onDeleteProblem}=useActions();
+  const navigate=useNavigate();
   const allTags=useMemo(()=>{
     if(!Array.isArray(problems)) return [];
     const tagsSet=new Set()
@@ -33,8 +43,16 @@ const   ProblemTable = ({problems}) => {
 
   const difficulties=["EASY","MEDIUM","HARD"];
 
-  const handleDelete =(id)=>{}
-  const handleAddToPlaylist = (id)=>{}
+  const handleDelete =(id)=>{
+    onDeleteProblem(id);
+  }
+  const handleAddToPlaylist = (problemId)=>{
+    setSelectedProblemId(problemId);
+    setIsAddToPlaylistModelOpen(true);
+  };
+  const handleCreatePlaylist=async (data)=>{
+    await createPlaylist(data);
+  }
 
   return (
      <div className="w-full max-w-6xl mx-auto mt-10">
@@ -149,9 +167,12 @@ const   ProblemTable = ({problems}) => {
                               onClick={() => handleDelete(problem.id)}
                               className="btn btn-sm btn-error"
                             >
-                              <TrashIcon className="w-4 h-4 text-white" />
+                              {
+                                isDeletingProblem ? <Loader2 className='animate-spin h-4 w-4'/> : 
+                                <TrashIcon className="w-4 h-4 text-white" />
+                              }
                             </button>
-                            <button disabled className="btn btn-sm btn-warning">
+                            <button onClick={() => navigate(`/problems/${problem.id}/edit`)} className="btn btn-sm btn-warning">
                               <PencilIcon className="w-4 h-4 text-white" />
                             </button>
                           </div>
@@ -197,7 +218,16 @@ const   ProblemTable = ({problems}) => {
          Next
         </button>
       </div>
+
+      <CreatePlaylistModel
+      isOpen={isCreateModalOpen}
+      onClose={()=>setIsCreateModalOpen(false)}
+       onSubmit={handleCreatePlaylist}/>
       
+      <AddToPlaylist 
+      isOpen={isAddToPlaylistModelOpen}
+      onClose={()=>setIsAddToPlaylistModelOpen(false)}
+      problemId={selectedProblemId}/>
     </div>
   )
 }

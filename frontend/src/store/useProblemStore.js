@@ -46,7 +46,7 @@ export const useProblemStore= create((set)=>(
     getSolvedProblemByUser:async()=>{
         try{
                 const res=await exiosInstance.get("/problems/get-solved-problem")
-                set({solvedProblems:res.data.problems})
+                set({solvedProblems:res.data.problems ?? []})
         }
         catch(error){
             console.log("Error getting all problems",error);

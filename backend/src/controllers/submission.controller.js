@@ -30,7 +30,8 @@ export const getSubmissionsForProblem=async (req,res)=>{
 
         const submissions=await db.submission.findMany({
             where:{
-                userId,
+                 userId:userId,
+                 problemId:problemId,
             }
         })
         res.status(200).json({

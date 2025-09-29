@@ -20,11 +20,14 @@ import {
 import { useProblemStore } from '../store/useProblemStore';
 import { useExecutionStore } from '../store/useExecutionStore';
 import { getLanguageId } from '../lib/lang';
+import { useSubmissionStore } from '../store/useSubmissionStore';
 import SubmissionResults from '../components/Submission';
-
+import SubmissionsList from '../components/SubmissionList';
 const ProblemPage = () => {
     const {id} = useParams();
     const {getProblemById, problem, isProblemLoading} = useProblemStore();
+    const {submission:submissions,isLoading:isSubmissionsLoading, getSubmissionForProblem,getSubmissionCountForProblem,submissionCount}=useSubmissionStore(); 
+    // bhai yha submission ko humne submissions naam provide kiya hai yha submission ko hum useSubmissionStore se le rhe hai  or uska naam humne yha badalkar submissions de diya
     const [code, setCode] = useState("");
     const [activeTab, setActiveTab] = useState("description");
     const [selectedLanguage, setSelectedLanguage] = useState("javascript");
@@ -32,10 +35,9 @@ const ProblemPage = () => {
     const [testcases, setTestCases] = useState([]);
     const {executeCode,submission,isExecuting}=useExecutionStore();
 
-    const submissionCount = 10;
-
     useEffect(() => {
         getProblemById(id);
+        getSubmissionCountForProblem(id);
     }, [id]);
 
     useEffect(() => {
@@ -50,12 +52,18 @@ const ProblemPage = () => {
         }
     }, [problem, selectedLanguage]);
 
+    useEffect(()=>{
+     if(activeTab === "submissions" && id){
+      getSubmissionForProblem(id);
+     } 
+    },[activeTab,id]);
+    // console.log("submission",submissions);
+
     const handleLanguageChange = (e) => {
         const lang = e.target.value;
         setSelectedLanguage(lang || "");
         setCode(problem.codeSnippets?.[lang] || "");
     };
-
     if (isProblemLoading || !problem) {
     return (
       <div className="flex items-center justify-center h-screen bg-base-200">
@@ -66,7 +74,6 @@ const ProblemPage = () => {
       </div>
     );
   }
-
      const renderTabContent = () => {
     switch (activeTab) {
       case "description":
@@ -129,11 +136,7 @@ const ProblemPage = () => {
         );
       case "submissions":
         return (
-         <div className='p-4 text-center text-base-content/70'>No Submission</div>
-          // <SubmissionsList
-          //   submissions={submissions}
-          //   isLoading={isSubmissionsLoading}
-          // />
+         <SubmissionsList submissions={submissions} isLoading={isSubmissionsLoading}/>
         );
       case "discussion":
         return (
@@ -291,7 +294,7 @@ const ProblemPage = () => {
                   options={
                     {
                       minimap:{enabled:false},
-                      fontSize:22,
+                      fontSize:18,
                       lineNumbers:'on',
                       roundedSelection:false,
                       scrollBeyondLastLine:false,
