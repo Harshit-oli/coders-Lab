@@ -8,12 +8,12 @@ import { usePlaylistStore } from '../store/usePlaylistStore'
 import CreatePlaylistModel from './CreatePlaylistModel'
 import AddToPlaylist from './AddToPlaylist'
 
-const   ProblemTable = ({problems}) => {
+const   AllProblems = ({problems}) => {
   const {authUser}=useAuthStore();
   const [search,setSearch]=useState("");
   const [difficulty,setDifficulty]=useState("ALL");
   const [selectedTag,setSelectedTag]=useState("ALL");
-  const [currentPage,setCurrentPage]=useState(1); 
+//   const [currentPage,setCurrentPage]=useState(1); 
    const [selectedProblemId, setSelectedProblemId] = useState(null);
   const [isCreateModalOpen,setIsCreateModalOpen]=useState(false);
   const [isAddToPlaylistModelOpen,setIsAddToPlaylistModelOpen]=useState(false);
@@ -34,12 +34,7 @@ const   ProblemTable = ({problems}) => {
     .filter((problem)=>
       selectedTag==="ALL" ? true : problem.tags?.includes(selectedTag))
   },[problems,search,difficulty,selectedTag]);
-  ////->>> ise jo ye neeche 5 line ka code code h ise hi pagination khte h
-  const itemsPerPage=5;
-  const totalPages = Math.ceil(filteredProblems.length / itemsPerPage);
-  const paginatedProblems=useMemo(()=>{
-    return filteredProblems.slice((currentPage-1) * itemsPerPage , currentPage * itemsPerPage);
-  },[filteredProblems,currentPage]);
+  const paginatedProblems=filteredProblems;
 
   const difficulties=["EASY","MEDIUM","HARD"];
 
@@ -203,7 +198,7 @@ const   ProblemTable = ({problems}) => {
       </div>
       {/*  */}
 
-      <div className='flex justify-center mt-6 gap-2'>
+      {/* <div className='flex justify-center mt-6 gap-2'>
         <button className='btn btn-sm'
         disabled={currentPage===1}
         onClick={()=>setCurrentPage((prev)=>prev-1)}>
@@ -217,7 +212,7 @@ const   ProblemTable = ({problems}) => {
         onClick={()=>setCurrentPage((prev)=>prev+1)}>
          Next
         </button>
-      </div>
+      </div> */}
 
       <CreatePlaylistModel
       isOpen={isCreateModalOpen}
@@ -233,4 +228,4 @@ const   ProblemTable = ({problems}) => {
   )
 }
 
-export default ProblemTable
+export default AllProblems
