@@ -170,3 +170,44 @@ export const check=async (req,res)=>{
     })
   }
 }
+
+
+export const update= async(req,res)=>{
+  try {
+      const {name,email}=req.body;
+    const userId=req.user.id;
+    const user=await db.user.findUnique({
+        where:{
+            id:userId,
+        }
+    })
+
+    if(!user){
+        return res.status(400).json({
+            success:false,
+            message:"user not found",
+        })
+    }
+    const updateUser=await db.user.update({
+        where:{
+            id:userId,
+        },
+        data:{
+     ...(name && { name }),
+     ...(email && { email }),     
+      }
+    })
+
+    return res.status(200).json({
+        success:true,
+        message:"profile updated successfully",
+        updateUser
+    })
+  } catch (error) {
+    return res.status(500).json({
+        success:false,
+        message:"internal server error",
+
+    })
+  }
+}

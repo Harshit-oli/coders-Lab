@@ -5,9 +5,18 @@ import { useAuthStore } from "../store/useAuthStore";
 import ProfileSubmission from "../components/ProfileSubmission";
 import ProblemSolvedByUser from "../components/ProblemSolvedByUser";
 import PlaylistProfile from "../components/PlaylistProfile";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { authUser } = useAuthStore();
+
+  const navigate=useNavigate();
+
+  const editBtn=()=>{
+    navigate("/editPage")
+  }
+
+
   
   return (
     <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center py-10 px-4 md:px-8 w-full">
@@ -36,8 +45,7 @@ const Profile = () => {
                     <span className="text-3xl">{authUser.name ? authUser.name.charAt(0) : "U"}</span>
                   )}
                 </div>
-              </div>
-              
+              </div>    
               {/* Name and Role Badge */}
               <div className="text-center md:text-left">
                 <h2 className="text-2xl font-bold">{authUser.name}</h2>
@@ -96,7 +104,7 @@ const Profile = () => {
             
             {/* Action Buttons */}
             <div className="card-actions justify-end mt-6">
-              <button className="btn btn-outline btn-primary">Edit Profile</button>
+              <button className="btn btn-outline btn-primary" onClick={editBtn}>Edit Profile</button>
               <button className="btn btn-primary">Change Password</button>
             </div>
           </div>

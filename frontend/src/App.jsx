@@ -13,6 +13,8 @@ import ProblemPage from './page/ProblemPage'
 import EditPage from "./page/EditPage"
 import Profile from './page/Profile'
 import ProblemsPages from './components/ProblemPages'
+import ProfileEdit from './components/ProfileEdit'
+
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth}=useAuthStore();
@@ -34,6 +36,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout/>}>
         <Route index element={authUser ? <HomePage/> : <Navigate to={"/login"}/>}/>
+        <Route path="editPage" element={authUser ? <ProfileEdit/> : <Navigate to={"/login"}/>}/>
          <Route
           path="/problems"
           element={<ProblemsPages/>}
