@@ -8,5 +8,4 @@ const AddProblem = () => {
     </div>
   )
 }
-
 export default AddProblem

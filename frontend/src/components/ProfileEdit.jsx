@@ -23,6 +23,7 @@ useEffect(()=>{
     setChange((prev)=>({...prev,[e.target.name]:e.target.value}))
   }
 
+
   const handleSubmit=async(e)=>{
      e.preventDefault();
      setSave(true);
@@ -43,23 +44,27 @@ useEffect(()=>{
 
   }
   return (
-    <div>
+    <div className="bg-gray-600 p-8 w-[400px] mt-20">
       
 <form onSubmit={handleSubmit}>
-        <input type="text"
+      <div className='flex flex-col justify-center items-center'>
+          <input type="text"
         name="name"
         value={change.name}
         onChange={handleChange}
+        className='border border-gray-300 p-2 mb-3'
         required />
 
         <input type="email"
         name="email"
         value={change.email}
         onChange={handleChange}
+        className='border border-gray-300 p-2'
         required />
+      </div>
 
         <button  type="submit"
-          className="btn btn-primary w-full"
+          className="btn btn-primary w-full mt-24"
           disabled={save}>{save ? "saving..." : "save changes"}</button>
 </form>
     </div>

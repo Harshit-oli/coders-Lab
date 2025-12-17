@@ -177,7 +177,7 @@ const ProblemPage = () => {
     }
   }
     return (
-        <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 max-w-7xl w-full">
+        <div className="md:min-h-screen bg-gradient-to-br from-base-300 to-base-200 max-w-7xl w-full">
             <nav className="navbar bg-base-100 shadow-lg px-4">
                 <div className="flex-1 gap-2">
                     <Link to={"/"} className="flex items-center gap-2 text-primary">
@@ -205,7 +205,7 @@ const ProblemPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex-none gap-4">
+                <div className="md:flex-none gap-4">
                     <button
                         className={`btn btn-ghost btn-circle ${isBookmarked ? "text-primary" : ""}`}
                         onClick={() => setIsBookMarked(!isBookmarked)}
@@ -216,7 +216,7 @@ const ProblemPage = () => {
                         <Share2 className="w-5 h-5" />
                     </button>
                     <select
-                        className="select select-bordered select-primary w-40"
+                        className="select select-bordered select-primary"
                         value={selectedLanguage}
                         onChange={handleLanguageChange}
                     >
@@ -229,8 +229,8 @@ const ProblemPage = () => {
                 </div>
             </nav>
             <div className='container mx-auto p-4'>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="card bg-base-100 shadow-xl">
+              <div className="grid grid-cols-1 m-auto lg:grid-cols-2 gap-6">
+              <div className="mx-auto card bg-base-100 shadow-xl">
             <div className="card-body p-0">
               <div className="tabs tabs-bordered">
                 <button

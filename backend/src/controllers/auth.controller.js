@@ -211,3 +211,44 @@ export const update= async(req,res)=>{
     })
   }
 }
+
+export const changePassword=async(req,res)=>{
+    try {
+        const {password}=req.body;
+        const userId=req.params.id;
+        const user=await db.user.findUnique({
+            where:{
+               id:userId,
+            }
+        })
+
+        if(!user){
+            return res.status(401).json({
+                success:false,
+                message:"user not found",
+            })
+        }
+
+        const changePassword=await bcrypt.hash(password,10);
+
+        const updatePassword=await db.user.update({
+            where:{
+                id:userId,
+            },
+            data:{
+                password:changePassword,
+            }
+        })
+
+        return res.status(200).json({
+            success:true,
+            message:"password changed successfully",
+            updatePassword,
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success:true,
+            message:"server error",
+        })
+    }
+}
