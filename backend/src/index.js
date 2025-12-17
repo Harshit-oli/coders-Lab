@@ -15,10 +15,11 @@ const PORT=process.env.PORT;
 app.use(express.json());
 app.use(
     cors({
-     origin: ["https://coders-lab.vercel.app"],
+      origin: "https://coders-lab.vercel.app",
       credentials: true,
     })
   );
+  
 app.use(cookieParser());
 app.get("/",(req,res)=>{
     
