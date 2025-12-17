@@ -15,7 +15,7 @@ const PORT=process.env.PORT;
 app.use(express.json());
 app.use(
     cors({
-      origin: "https://coders-lab.vercel.app",
+      origin: "http://localhost:5173",
       credentials: true,
     })
   );
