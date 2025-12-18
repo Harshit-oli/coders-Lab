@@ -5,7 +5,7 @@ export const authMiddleware=async(req,res,next)=>{
     const token=req.cookies.jwt;
 
     if(!token){
-    return res.status(400).json({
+    return res.status(401).json({
          success:false,
          message:"token not found",
      })
@@ -15,7 +15,7 @@ export const authMiddleware=async(req,res,next)=>{
     try {
      decode=jwt.verify(token,process.env.JWT_SECRET);
     } catch (error) {
-     return res.status(400).json({
+     return res.status(401).json({
          message:"Unauthorised-Invalid token",
      })
     }
