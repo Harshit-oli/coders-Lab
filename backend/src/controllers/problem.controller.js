@@ -3,7 +3,6 @@ import { pollBatchResults } from "../libs/jubge0.lib.js";
 import { submitBatch } from "../libs/jubge0.lib.js";
 import { getJudge0LanguageId } from "../libs/jubge0.lib.js";
 export const createProblem=async(req,res)=>{
-    //
     const {title,description,difficulty,tags,examples,constraints,testcases,codeSnippets,referenceSolutions}=req.body;
     //going to check the user role once again
 

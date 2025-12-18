@@ -43,8 +43,8 @@ export const register=async (req,res)=>{
 
         res.cookie("jwt",token,{
             httpOnly:true,
-            sameSite:"strict",
-            secure:process.env.NODE_ENV !=="development",
+            sameSite:"None",
+            secure:true,
             maxAge:7*24*60*60
         })
 
@@ -92,7 +92,7 @@ export const login=async (req,res)=>{
             message:"user does not found",
         })
       }
-     const comparePassword=bcrypt.compare(password,user.password);
+     const comparePassword=await bcrypt.compare(password,user.password);
      if(!comparePassword){
         return res.status(400).json({
             success:false,
@@ -106,8 +106,8 @@ export const login=async (req,res)=>{
 
      res.cookie("jwt",token,{
         httpOnly:true,
-        sameSite:"strict",
-        secure:process.env.NODE_ENV !=="development",
+        sameSite:"None",
+        secure:true,
         maxAge:7*24*60*60
     })
 
@@ -138,8 +138,8 @@ export const logout=async (req,res)=>{
  try {
     res.clearCookie("jwt",{
         httpOnly:true,
-        sameSite:"strict",
-        secure:process.env.NODE_ENV !== "development",
+        sameSite:"None",
+        secure:true,
       })
     
       res.status(200).json({
