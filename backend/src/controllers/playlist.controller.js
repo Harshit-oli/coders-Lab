@@ -68,57 +68,64 @@ export const getPlayListDetails= async(req,res)=>{
 
 }
 
-export const createPlaylist=async(req,res)=>{
- try {
-        const {name,description}=req.body;
-        if(!name || !description){
-            res.status(400).json({
-                success:false,
-                message:"all field must be fullfilled",
-            })
-        }
-        const userId=req.user.id;
+export const createPlaylist = async (req, res) => {
+  try {
+    const { name, description } = req.body;
 
-        if(!userId){
-            res.status(400).json({
-                success:false,
-                message:"user field is not find"
-            })
-        }
+    if (!name || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields must be filled",
+      });
+    }
 
-        const playlistFind=await db.Playlist.findUnique({
-            where: {
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "User not authenticated",
+      });
+    }
+
+    const playlistFind = await db.playlist.findUnique({
+      where: {
         name_userId: {
-          name: name,
-          userId: userId
+          name,
+          userId,
         },
       },
-        })
+    });
 
-        if(playlistFind){
-            req.status(400).json({
-                success:false,
-                message:"playlist already exist"
-            })
-        }
-
-        const playlist=await db.playlist.create({
-            data:{
-                name,
-                description,
-                userId
-            }
-        });
-
-        res.status(200).json({
-            success:true,
-            message:"playlist created successfully",
-            playlist
-        })
-    } catch (error) {
-        
+    if (playlistFind) {
+      return res.status(400).json({
+        success: false,
+        message: "Playlist already exists",
+      });
     }
-}
+
+    const playlist = await db.playlist.create({
+      data: {
+        name,
+        description,
+        userId,
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Playlist created successfully",
+      playList: playlist, // frontend ke saath match
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 
 export const addProblemToPlaylist=async(req,res)=>{
     const {playlistId}=req.params;

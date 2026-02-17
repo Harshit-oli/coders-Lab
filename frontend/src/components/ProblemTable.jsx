@@ -83,10 +83,10 @@ const ProblemTable = ({ problems }) => {
   };
 
   return (
-    <div className="w-full max-w-6xl md:mx-auto mt-10">
+    <div className="w-[90%] max-w-6xl md:mx-auto mt-10">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="ml-10 font-bold text-2xl">Problems</h2>
+      <div className="w-full flex justify-between items-center mb-6">
+        <h2 className="font-bold text-2xl ">Problems</h2>
         <button
           className="btn btn-primary gap-2"
           onClick={() => setIsCreateModalOpen(true)}
@@ -97,7 +97,7 @@ const ProblemTable = ({ problems }) => {
       </div>
 
       {/* Filters */}
-      <div className="ml-10 md:flex flex-wrap mb-6 gap-4">
+      <div className="md:flex flex-wrap mb-6 gap-4">
         <input
           type="text"
           placeholder="Search by title"

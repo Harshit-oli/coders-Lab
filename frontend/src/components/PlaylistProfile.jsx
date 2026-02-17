@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { usePlaylistStore } from '../store/usePlaylistStore';
 import { Link } from 'react-router-dom';
 import { BookOpen, ChevronDown, ChevronUp, Clock, List, Tag, ExternalLink } from 'lucide-react';
+import CreatePlaylistModel from './CreatePlaylistModel';
 
 const PlaylistProfile = () => {
   const { getAllPlaylists, playlists , deletePlaylist } = usePlaylistStore();
   const [expandedPlaylist, setExpandedPlaylist] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+    const { createPlaylist } = usePlaylistStore();
 
   useEffect(() => {
     getAllPlaylists();
@@ -19,6 +23,9 @@ const PlaylistProfile = () => {
     }
   };
 
+  const handleCreatePlaylist = async (data) => {
+    await createPlaylist(data);
+  };
   const handleDelete = async (id) => {
     await deletePlaylist(id);
   };
@@ -61,7 +68,7 @@ const PlaylistProfile = () => {
               <h3 className="text-xl font-medium">No playlists found</h3>
               <p className="text-base-content/70">Create your first playlist to organize problems!</p>
               <div className="card-actions justify-center mt-4">
-                <button className="btn btn-primary">Create Playlist</button>
+                <button className="btn btn-primary"  onClick={() => setIsCreateModalOpen(true)}>Create Playlist</button>
               </div>
             </div>
           </div>
@@ -86,7 +93,7 @@ const PlaylistProfile = () => {
                         <div className="flex items-center gap-2 mt-1 text-sm text-base-content/70">
                           <div className="flex items-center gap-1">
                             <List size={14} />
-                            <span>{playlist.problems.length} problems</span>
+                            <span>{playlist.problems?.length || 0} problems</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock size={14} />
@@ -166,6 +173,12 @@ const PlaylistProfile = () => {
           </div>
         )}
       </div>
+
+       <CreatePlaylistModel
+              isOpen={isCreateModalOpen}
+              onClose={() => setIsCreateModalOpen(false)}
+              onSubmit={handleCreatePlaylist}
+            />
     </div>
   );
 };
