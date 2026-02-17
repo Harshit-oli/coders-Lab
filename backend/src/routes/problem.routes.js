@@ -8,6 +8,6 @@ problemRoutes.get("/get-all-problems",authMiddleware,getAllProblems);
 problemRoutes.get("/get-problem/:id",authMiddleware,getProblemById);
 problemRoutes.put("/update-problem/:id",authMiddleware,checkUser,updateProblem);
 problemRoutes.delete("/delete-problem/:id",authMiddleware,checkUser,deleteProblem);
-problemRoutes.get("/get-solved-problem",authMiddleware,checkUser,getAllProblemsSolvedByUser);
+problemRoutes.get("/get-solved-problem",authMiddleware,getAllProblemsSolvedByUser);
 
 export default problemRoutes;
